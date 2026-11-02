@@ -88,7 +88,7 @@ def query():
         <span class="pkg-status {status_cls}">{status_text}</span>{pickup_btn}</div></div>'''
     content = f'''<div class="card"><h3>📋 尾号 {phone} 的包裹 ({len(pkgs)}件)</h3>{rows}</div>
     <a href="/" class="btn btn-primary">← 返回</a>'''
-    return BASE_HTML.format(content=content)
+    return BASE_HTML.replace("{content}", content)
 
 def register():
     if request.method == 'POST':
@@ -120,7 +120,7 @@ def register():
     <div class="form-group"><label>货架位置</label>
     <input type="text" name="shelf" placeholder="如 C区-3层" required></div>
     <button class="btn btn-primary" type="submit">确认登记</button></form></div>'''
-    return BASE_HTML.format(content=form)
+    return BASE_HTML.replace("{content}", content)
 
 @app.route('/pickup/<code>')
 def pickup(code):
@@ -135,8 +135,8 @@ def pickup(code):
     <p style="margin:12px 0">包裹 {code} 已标记为已取件</p>
     <p style="color:#888">{pkg.get("carrier")} · {pkg.get("shelf")}</p>
     <a href="/dashboard" class="btn btn-primary" style="margin-top:12px">查看面板</a></div>'''
-    return BASE_HTML.format(content=content)
-
+    return BASE_HTML.replace("{content}", content)
+  
 @app.route('/dashboard')
 def dashboard():
     pending_count = r.zcard('packages:pending')
@@ -156,7 +156,7 @@ def dashboard():
     <div class="stat-card"><div class="num">{total_count}</div><div class="label">总包裹数</div></div></div>
     <div class="card"><h3>📦 待取件包裹列表</h3>{rows or '<p class="empty">暂无待取包裹</p>'}</div>
     <a href="/register" class="btn btn-primary">登记新包裹</a>'''
-    return BASE_HTML.format(content=content)
+    return BASE_HTML.replace("{content}", content)
 
 @app.route('/health')
 def health():
