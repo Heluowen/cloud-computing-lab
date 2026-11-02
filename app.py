@@ -69,7 +69,7 @@ def query():
     matched = [k.split(':')[1] for k in all_keys if k.split(':')[1].endswith(phone)]
     if not matched:
         content = f'<div class="card"><p class="empty">未找到尾号 {phone} 的包裹</p><a href="/" class="btn btn-primary">返回</a></div>'
-        return BASE_HTML.format(content=content)
+        return  BASE_HTML.replace("{content}", content)
     full_phone = matched[0]
     codes = r.smembers(f'phone:{full_phone}')
     pkgs = [r.hgetall(f'pkg:{c}') | {'code': c} for c in codes]
@@ -108,7 +108,7 @@ def register():
         <p style="color:#888">快递公司: {carrier} · 货架: {shelf} · 手机尾号: {phone[-4:]}</p>
         <a href="/register" class="btn btn-primary" style="margin-top:12px">继续登记</a>
         <a href="/dashboard" class="btn btn-primary" style="margin-top:12px">查看面板</a></div>'''
-        return BASE_HTML.format(content=content)
+        return BASE_HTML.replace("{content}", content)
     form = '''<div class="card"><h3>📝 登记新包裹</h3>
     <form method="POST">
     <div class="form-group"><label>收件人手机号</label>
