@@ -58,7 +58,7 @@ def index():
     <form action="/query" method="GET" class="search-box">
     <input type="text" name="phone" placeholder="输入手机号后四位，如 8829" pattern="[0-9]{4}" required>
     <button class="btn btn-primary" type="submit">查询</button></form></div>'''
-    return BASE_HTML.format(content=content)
+    return BASE_HTML.replace("{content}", content)
 
 @app.route('/query')
 def query():
